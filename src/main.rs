@@ -1,4 +1,5 @@
-use std::collections::{HashSet, HashMap};
+use std::collections::{HashMap, HashSet};
+use std::io::{stdout, stdin, Write};
 
 struct Automota {
     num_states: u8,
@@ -40,6 +41,7 @@ impl Automota {
 }
 
 fn main() {
+/*
     let num = 5;
     let start = 0;
     let accepting = vec![4];
@@ -51,9 +53,7 @@ fn main() {
     let mut aut = Automota::new(num, start, accepting, &transitions);
 
     println!("{}", aut.verify(&"bbaabb"));
-
-
-
+*/
     let num = 8;
     let start = 0;
     let accepting = vec![7];
@@ -65,8 +65,17 @@ fn main() {
                            (5, 'a', 2), (5, 'b', 5),
                            (6, 'a', 0), (6, 'b', 7),
                            (7, 'a', 3), (7, 'b', 7)];
-    let mut aut = Automota::new(num, start, accepting, &transitions); 
+    let aut = Automota::new(num, start, accepting, &transitions); 
 
-    println!("{}", aut.verify("baba"));
-    println!("{}", aut.verify("aaa"));
+    let mut buff = String::new();
+    loop {
+        if let Ok(_) = stdin().read_line(&mut buff) {
+            buff.pop(); // pop newline at end of buff
+            if buff.len() == 0 { return; }
+
+            println!("{}: {}\n", buff, aut.verify(&buff[0..buff.len()]));
+        }
+
+        buff = String::new();
+    }
 }
